@@ -1,0 +1,108 @@
+{
+    "project_type": "gradle",
+    "android_gradle_plugin_version": "2.2.2",
+    "freeline_gradle_plugin_version": "0.8.7",
+    "java_home": "D:\\Program\\JDK",
+    "freeline_cache_dir": "G:\\androidstudiobench\\WNote",
+    "auto_dependency": true,
+    "product_flavor": "",
+    "build_script": "gradlew.bat :app:assembleDebug",
+    "build_script_work_directory": "",
+    "root_dir": "G:\\androidstudiobench\\WNote",
+    "main_project_name": "app",
+    "main_project_dir": "app",
+    "build_directory": "G:\\androidstudiobench\\WNote\\app\\build",
+    "build_cache_dir": "G:\\androidstudiobench\\WNote\\app\\build\\freeline",
+    "build_tools_version": "25.0.2",
+    "sdk_directory": "D:\\Program\\AndroidSDK",
+    "build_tools_directory": "D:\\Program\\AndroidSDK\\build-tools\\25.0.2",
+    "compile_sdk_version": "android-25",
+    "compile_sdk_directory": "D:\\Program\\AndroidSDK\\platforms\\android-25",
+    "package": "com.regeorge.wnote",
+    "debug_package": "com.regeorge.wnote",
+    "main_manifest_path": "G:\\androidstudiobench\\WNote\\app\\src\\main\\AndroidManifest.xml",
+    "launcher": "com.regeorge.wnote.MainActivity",
+    "apk_path": "G:\\androidstudiobench\\WNote\\app\\build\\outputs\\apk\\app-debug.apk",
+    "extra_dep_res_paths": [
+        
+    ],
+    "exclude_dep_res_paths": [
+        
+    ],
+    "main_r_path": "G:\\androidstudiobench\\WNote\\app\\build\\generated\\source\\r\\debug\\R.java",
+    "use_jdk8": true,
+    "ignore_resource_ids": [
+        "avd_hide_password_1",
+        "avd_hide_password_2",
+        "avd_hide_password_3",
+        "avd_show_password_1",
+        "avd_show_password_2",
+        "avd_show_password_3"
+    ],
+    "use_system_gradle": false,
+    "check_sources_md5": [
+        
+    ],
+    "main_src_directory": [
+        "G:\\androidstudiobench\\WNote\\app\\src\\debug\\java",
+        "G:\\androidstudiobench\\WNote\\app\\src\\main\\java"
+    ],
+    "main_res_directory": [
+        "G:\\androidstudiobench\\WNote\\app\\src\\debug\\res",
+        "G:\\androidstudiobench\\WNote\\app\\src\\main\\res"
+    ],
+    "main_assets_directory": [
+        "G:\\androidstudiobench\\WNote\\app\\src\\debug\\assets",
+        "G:\\androidstudiobench\\WNote\\app\\src\\main\\assets"
+    ],
+    "main_jni_directory": [
+        "G:\\androidstudiobench\\WNote\\app\\src\\debug\\jni",
+        "G:\\androidstudiobench\\WNote\\app\\src\\main\\jni"
+    ],
+    "main_jniLibs_directory": [
+        "G:\\androidstudiobench\\WNote\\app\\src\\debug\\jniLibs",
+        "G:\\androidstudiobench\\WNote\\app\\src\\main\\jniLibs"
+    ],
+    "project_source_sets": {
+        "app": {
+            "main_src_directory": [
+                "G:\\androidstudiobench\\WNote\\app\\src\\debug\\java",
+                "G:\\androidstudiobench\\WNote\\app\\src\\main\\java"
+            ],
+            "main_res_directory": [
+                "G:\\androidstudiobench\\WNote\\app\\src\\debug\\res",
+                "G:\\androidstudiobench\\WNote\\app\\src\\main\\res"
+            ],
+            "main_assets_directory": [
+                "G:\\androidstudiobench\\WNote\\app\\src\\debug\\assets",
+                "G:\\androidstudiobench\\WNote\\app\\src\\main\\assets"
+            ],
+            "main_jni_directory": [
+                "G:\\androidstudiobench\\WNote\\app\\src\\debug\\jni",
+                "G:\\androidstudiobench\\WNote\\app\\src\\main\\jni"
+            ],
+            "main_jniLibs_directory": [
+                "G:\\androidstudiobench\\WNote\\app\\src\\debug\\jniLibs",
+                "G:\\androidstudiobench\\WNote\\app\\src\\main\\jniLibs"
+            ],
+            "main_manifest_path": "G:\\androidstudiobench\\WNote\\app\\src\\main\\AndroidManifest.xml"
+        }
+    },
+    "modules": [
+        {
+            "name": "app",
+            "path": "G:\\androidstudiobench\\WNote\\app"
+        }
+    ],
+    "module_dependencies": {
+        "app": [
+            
+        ]
+    },
+    "databinding": [
+        
+    ],
+    "databinding_modules": [
+        
+    ]
+}
