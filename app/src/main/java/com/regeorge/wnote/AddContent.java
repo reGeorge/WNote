@@ -47,17 +47,30 @@ public class AddContent extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		switch(v.getId()) {
 			case R.id.a_save:
-				addDB();
-				Toast.makeText(getBaseContext(), "已保存", Toast.LENGTH_SHORT ).show();
+				//用equals判断输入，trim()--头尾空白被滤掉
+				if("".equals(edtext.getText().toString()))
+				{
+					Toast.makeText(getBaseContext(), "不能保存空笔记", Toast.LENGTH_SHORT).show();
+				}
+				else {
+					addData();
+					Toast.makeText(getBaseContext(), "已保存", Toast.LENGTH_SHORT).show();
+				}
 				finish();
 				break;
 			case R.id.a_cancel:
+				if("".equals(edtext.getText().toString()))
+				{
+				}
+				else {
+					addData();
+				}
 				finish();
 				break;
 		}
 	}
 
-	public void addDB() {
+	public void addData() {
 		ContentValues cv = new ContentValues();
 		cv.put(NotesDB.CONTENT,edtext.getText().toString());
 		cv.put(NotesDB.TIME, getTime());
