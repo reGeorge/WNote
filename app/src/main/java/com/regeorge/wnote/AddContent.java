@@ -27,10 +27,17 @@ public class AddContent extends Activity implements OnClickListener{
 		//val = getIntent().getStringExtra("flag");
 		//Toast.makeText(getBaseContext(), val, Toast.LENGTH_SHORT ).show();
 		initView();
+	}
 
-
-
-
+	@Override
+	public void onBackPressed() {
+		if("".equals(edtext.getText().toString()))
+		{
+		}
+		else {
+			addData();
+		}
+		finish();
 	}
 
 	public void initView() {

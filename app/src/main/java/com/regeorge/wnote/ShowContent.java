@@ -34,7 +34,19 @@ public class ShowContent extends Activity implements OnClickListener {
 
         
     }
-    
+
+    @Override
+    public void onBackPressed() {
+        if("".equals(s_edtxt.getText().toString()))
+        {
+        }
+        else{
+            updateData();
+            Toast.makeText(getBaseContext(), "已保存", Toast.LENGTH_SHORT).show();
+        }
+        finish();
+    }
+
     public void initView() {
     	s_delete = (Button) findViewById(R.id.s_deletebtn);
     	s_cancel = (Button) findViewById(R.id.s_cancelbtn);
@@ -88,7 +100,6 @@ public class ShowContent extends Activity implements OnClickListener {
                 break;
 
             case R.id.s_edtext:
-                Toast.makeText(getBaseContext(), "Edittext", Toast.LENGTH_SHORT).show();
                 s_edtxt. setCursorVisible (true) ;
                 s_edtxt.setFocusable(true);
                 s_edtxt.setFocusableInTouchMode(true);
