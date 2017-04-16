@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/list_content"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:gravity="top|left|clip_vertical" />
+            android:text="这是笔记"
+            android:gravity="bottom|left"/>
 
         <TextView
             android:id="@+id/list_time"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right" />
+            android:gravity="left"
+            android:textSize="10dp"
+            android:text="2017年2月18日 13:12:32"/>
 
 </LinearLayout>
 

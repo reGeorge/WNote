@@ -80,7 +80,7 @@ public class ShowContent extends Activity implements OnClickListener {
                 }
                 else{
                     updateData();
-                    Toast.makeText(getBaseContext(), "已保存", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getBaseContext(), "已保存", Toast.LENGTH_SHORT).show();
                 }
                 finish();
 				break;

@@ -36,6 +36,7 @@ public class AddContent extends Activity implements OnClickListener{
 		}
 		else {
 			addData();
+			Toast.makeText(getBaseContext(), "已保存", Toast.LENGTH_SHORT).show();
 		}
 		finish();
 	}
@@ -61,7 +62,7 @@ public class AddContent extends Activity implements OnClickListener{
 				}
 				else {
 					addData();
-					Toast.makeText(getBaseContext(), "已保存", Toast.LENGTH_SHORT).show();
+					//Toast.makeText(getBaseContext(), "已保存", Toast.LENGTH_SHORT).show();
 				}
 				finish();
 				break;
@@ -71,6 +72,7 @@ public class AddContent extends Activity implements OnClickListener{
 				}
 				else {
 					addData();
+					Toast.makeText(getBaseContext(), "已保存", Toast.LENGTH_SHORT).show();
 				}
 				finish();
 				break;
