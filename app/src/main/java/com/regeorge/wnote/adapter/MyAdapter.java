@@ -1,4 +1,4 @@
-package com.regeorge.wnote;
+package com.regeorge.wnote.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.regeorge.wnote.R;
 
 public class MyAdapter extends BaseAdapter {
 	

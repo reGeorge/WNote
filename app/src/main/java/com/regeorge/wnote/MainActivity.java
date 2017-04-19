@@ -16,13 +16,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.regeorge.wnote.adapter.ListViewAdapter;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener {
 
     private FloatingActionButton newbtn;
     private ListView lv;
     private Intent i;
-    private MyAdapter adapter;
+    private ListViewAdapter adapter;
     private NotesDB notesDB;
     private SQLiteDatabase dbReader;
     private Cursor cursor;
@@ -146,7 +148,7 @@ public class MainActivity extends AppCompatActivity
     public void selectDB() {
         Cursor cursor = dbReader.query(NotesDB.TABLE_NAME, null, null, null,
                 null, null, null);
-        adapter = new MyAdapter(this,cursor);
+        adapter = new ListViewAdapter(this,cursor);
         lv.setAdapter(adapter);
     }
 
