@@ -22,11 +22,13 @@
         <activity
             android:label="新增日程"
             android:name="com.regeorge.wnote.AddContent"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:label="修改日程"
             android:name="com.regeorge.wnote.ShowContent"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
         </activity>
     </application>

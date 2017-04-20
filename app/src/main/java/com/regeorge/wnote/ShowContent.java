@@ -19,7 +19,7 @@ import java.util.Date;
 import static com.regeorge.wnote.R.id.s_edtext;
 
 
-public class ShowContent extends AppCompatActivity implements OnClickListener {
+public class ShowContent extends AppCompatActivity  {
 
 	//private Button s_cancel,s_save;
 	private EditText s_edtxt;
@@ -69,28 +69,18 @@ public class ShowContent extends AppCompatActivity implements OnClickListener {
         s_edtxt. setCursorVisible ( false ) ;
         s_edtxt.setFocusable(true);
         s_edtxt.clearFocus();
-        //s_edtxt.setSelection(index);
+        s_edtxt.setOnClickListener(new OnClickListener() {
+                                       @Override
+                                       public void onClick(View v) {
+                                           s_edtxt. setCursorVisible (true) ;
+                                           s_edtxt.setFocusable(true);
+                                           s_edtxt.setFocusableInTouchMode(true);
+                                       }
+                                   });
 
-        s_edtxt.setOnClickListener(this);
-        //s_save.setOnClickListener(this);
-        //s_delete.setOnClickListener(this);
-        //s_cancel.setOnClickListener(this);
 
     }
 
-	@Override
-	public void onClick(View v) {
-		//i = new Intent(this,AddContent.class);
-    	
-    	switch(v.getId()) {
-            case R.id.s_edtext:
-                s_edtxt. setCursorVisible (true) ;
-                s_edtxt.setFocusable(true);
-                s_edtxt.setFocusableInTouchMode(true);
-                break;
-            default:
-    	}
-	}
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.show,menu);
         return true;
