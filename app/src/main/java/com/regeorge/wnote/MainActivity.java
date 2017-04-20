@@ -2,6 +2,7 @@ package com.regeorge.wnote;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,15 +20,19 @@ import android.widget.ListView;
 import com.regeorge.wnote.adapter.ListViewAdapter;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private FloatingActionButton newbtn;
     private ListView lv;
+    //private View deleteBtn;
     private Intent i;
     private ListViewAdapter adapter;
     private NotesDB notesDB;
     private SQLiteDatabase dbReader;
+    //private SQLiteDatabase dbWriter;
     private Cursor cursor;
+
+    public static  boolean DELETE_FLAG = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +41,9 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initView();
-
+        notesDB = new NotesDB(this);
+        dbReader = notesDB.getReadableDatabase();
+        //dbWriter = notesDB.getWritableDatabase();
 
        /* DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -50,7 +57,22 @@ public class MainActivity extends AppCompatActivity
 
     public void initView() {
         lv = (ListView) findViewById(R.id.list);
-        lv.setOnItemClickListener(this);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                cursor = dbReader.query(NotesDB.TABLE_NAME, null, null, null,
+                        null, null, null);
+                //将数据库表与lv的item映射；
+                cursor.moveToPosition(position);
+                Intent j = new Intent(MainActivity.this,ShowContent.class);
+                j.putExtra(NotesDB.ID, cursor.getInt(cursor.getColumnIndex(NotesDB.ID)));
+                j.putExtra(NotesDB.CONTENT, cursor.getString(cursor.getColumnIndex(NotesDB.CONTENT)));
+                j.putExtra(NotesDB.TIME, cursor.getString(cursor.getColumnIndex(NotesDB.TIME)));
+                startActivity(j);
+            }
+        });
+
+
         newbtn = (FloatingActionButton) findViewById(R.id.new_btn);
         newbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,22 +87,12 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-        notesDB = new NotesDB(this);
-        dbReader = notesDB.getReadableDatabase();
+
+
+
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position,
-                            long id) {
-        cursor = dbReader.query(NotesDB.TABLE_NAME, null, null, null,
-                null, null, null);
-        cursor.moveToPosition(position);
-        Intent j = new Intent(MainActivity.this,ShowContent.class);
-        j.putExtra(NotesDB.ID, cursor.getInt(cursor.getColumnIndex(NotesDB.ID)));
-        j.putExtra(NotesDB.CONTENT, cursor.getString(cursor.getColumnIndex(NotesDB.CONTENT)));
-        j.putExtra(NotesDB.TIME, cursor.getString(cursor.getColumnIndex(NotesDB.TIME)));
-        startActivity(j);
-    }
+
 
     @Override
     public void onBackPressed() {
@@ -146,10 +158,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void selectDB() {
+        DELETE_FLAG = false;
         Cursor cursor = dbReader.query(NotesDB.TABLE_NAME, null, null, null,
                 null, null, null);
-        adapter = new ListViewAdapter(this,cursor);
+        adapter = new ListViewAdapter(this,cursor,notesDB);
         lv.setAdapter(adapter);
+
+        //对adapter添加观察者监听
+        DataSetObserver observer=new DataSetObserver(){
+            public void onChanged() {
+                selectDB();
+            }
+        };
+        adapter.registerDataSetObserver(observer);
     }
 
 

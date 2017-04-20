@@ -1,3 +1,4 @@
+/*//初始适配器
 package com.regeorge.wnote.adapter;
 
 import android.content.Context;
@@ -56,3 +57,4 @@ public class MyAdapter extends BaseAdapter {
 	}
 
 }
+*/

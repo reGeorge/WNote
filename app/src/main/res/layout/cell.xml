@@ -13,7 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#333"
+        android:background="#3F51B5"
         android:gravity="center"
         android:tag="Bottom3"
         android:weightSum="10">
@@ -30,8 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="5"
             android:text="Delete Item?"
-            android:textColor="#3f51b5"
-            android:textSize="17sp" />
+            android:textColor="#fff"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/c_delete"
