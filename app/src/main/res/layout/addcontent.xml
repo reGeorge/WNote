@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/a_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -28,25 +28,7 @@
             android:gravity="top|center_vertical"
             android:hint="note your idea ..." />
 
-    <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
 
-            <Button
-                android:id="@+id/a_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="保存" />
-
-            <Button
-                android:id="@+id/a_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="取消" />
-
-        </LinearLayout>
 
 
 </LinearLayout>

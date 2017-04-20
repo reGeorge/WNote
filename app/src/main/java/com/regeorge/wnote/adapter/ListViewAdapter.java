@@ -69,7 +69,7 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     }
 
     @Override
-    public View generateView(int position, ViewGroup parent) {
+    public View generateView(final int position, ViewGroup parent) {
         // 获取cell布局文件v
         View v = LayoutInflater.from(context).inflate(R.layout.cell,null);
         //返回文件中的view
@@ -91,9 +91,10 @@ public class ListViewAdapter extends BaseSwipeAdapter {
         v.findViewById(R.id.c_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                cursor.moveToPosition(position);
                 dbWriter = notesDB.getWritableDatabase();
                 dbWriter.delete(NotesDB.TABLE_NAME, "_id=" + cursor.getInt(cursor.getColumnIndex(NotesDB.ID)), null);
-                Toast.makeText(context, "click delete", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "click delete", Toast.LENGTH_SHORT).show();
                 notifyDataSetChanged();
             }
         });
