@@ -19,7 +19,7 @@ public class NotesDB extends SQLiteOpenHelper {
 		db.execSQL("CREATE TABLE " + TABLE_NAME + "(" 
 				+ ID +" INTEGER PRIMARY KEY AUTOINCREMENT," 
 				+ CONTENT + " TEXT NOT NULL,"
-				+ TIME + " TEXT NOT NULL)");//�������Ų�����
+				+ TIME + " TEXT NOT NULL)");//������������
 	}
 
 	@Override

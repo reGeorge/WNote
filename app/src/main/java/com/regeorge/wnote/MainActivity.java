@@ -162,11 +162,10 @@ public class MainActivity extends AppCompatActivity
 
     public void selectDB() {
         DELETE_FLAG = false;
-        Cursor cursor = dbReader.query(NotesDB.TABLE_NAME, null, null, null,
-                null, null, null);
+        Cursor cursor = dbReader.query(NotesDB.TABLE_NAME, null,
+                null, null, null, null, null);
         adapter = new ListViewAdapter(this,cursor,notesDB);
         lv.setAdapter(adapter);
-
         //对adapter添加观察者监听
         DataSetObserver observer=new DataSetObserver(){
             public void onChanged() {

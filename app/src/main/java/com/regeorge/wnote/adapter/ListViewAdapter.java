@@ -93,8 +93,8 @@ public class ListViewAdapter extends BaseSwipeAdapter {
             public void onClick(View view) {
                 cursor.moveToPosition(position);
                 dbWriter = notesDB.getWritableDatabase();
-                dbWriter.delete(NotesDB.TABLE_NAME, "_id=" + cursor.getInt(cursor.getColumnIndex(NotesDB.ID)), null);
-                //Toast.makeText(context, "click delete", Toast.LENGTH_SHORT).show();
+                dbWriter.delete(NotesDB.TABLE_NAME, "_id=" + cursor.getInt(
+                        cursor.getColumnIndex(NotesDB.ID)), null);
                 notifyDataSetChanged();
             }
         });

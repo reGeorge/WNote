@@ -1,6 +1,7 @@
 package com.regeorge.wnote;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -64,17 +65,19 @@ public class ShowContent extends AppCompatActivity  {
 
     	notesDB = new NotesDB(this);
         dbWriter = notesDB.getWritableDatabase();
-		s_edtxt.setText(getIntent().getStringExtra(NotesDB.CONTENT));
+		s_edtxt.setText(this.getIntent().getStringExtra(NotesDB.CONTENT));
 
         s_edtxt. setCursorVisible ( false ) ;
         s_edtxt.setFocusable(true);
         s_edtxt.clearFocus();
+
         s_edtxt.setOnClickListener(new OnClickListener() {
                                        @Override
                                        public void onClick(View v) {
-                                           s_edtxt. setCursorVisible (true) ;
-                                           s_edtxt.setFocusable(true);
-                                           s_edtxt.setFocusableInTouchMode(true);
+                                           //getSelectionStart();
+                                           Intent i = ShowContent.this.getIntent();
+                                           i.setClass(ShowContent.this,UpdateContent.class);
+                                           startActivity(i);
                                        }
                                    });
 
@@ -115,7 +118,8 @@ public class ShowContent extends AppCompatActivity  {
 		ContentValues cv = new ContentValues();
 		cv.put(NotesDB.CONTENT,s_edtxt.getText().toString());
 		cv.put(NotesDB.TIME, getTime());
-		dbWriter.update(NotesDB.TABLE_NAME, cv, "_id="+getIntent().getIntExtra(NotesDB.ID, 0),null);
+		dbWriter.update(NotesDB.TABLE_NAME, cv,
+                "_id="+getIntent().getIntExtra(NotesDB.ID, 0),null);
 	}
 
     private String getTime() {
@@ -124,4 +128,5 @@ public class ShowContent extends AppCompatActivity  {
         String str = format.format(date);
         return str;
     }
+
 }
