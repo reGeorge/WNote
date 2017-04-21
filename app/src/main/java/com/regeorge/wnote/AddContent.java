@@ -9,14 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AddContent extends AppCompatActivity {
 	//private Button savebtn,cancelbtn;
-	private EditText edtext;
+	private EditText a_edtxt;
 	//private String val;
 	private NotesDB notesDB;
 	private SQLiteDatabase dbWriter;
@@ -32,27 +31,30 @@ public class AddContent extends AppCompatActivity {
 			actionBar.setDisplayHomeAsUpEnabled(true);
 			//actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
 		}
-		//val = getIntent().getStringExtra("flag");
-		//Toast.makeText(getBaseContext(), val, Toast.LENGTH_SHORT ).show();
+		notesDB = new NotesDB(this);
+		dbWriter = notesDB.getWritableDatabase();
 		initView();
 	}
 
 	@Override
 	public void onBackPressed() {
-		if("".equals(edtext.getText().toString()))
+		if("".equals(a_edtxt.getText().toString()))
 		{
 		}
 		else {
 			addData();
-			Toast.makeText(getBaseContext(), "已保存", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getBaseContext(), "已保存", Toast.LENGTH_SHORT).show();
 		}
 		finish();
 	}
 
 	public void initView() {
-		edtext = (EditText) findViewById(R.id.a_edtext);
-		notesDB = new NotesDB(this);
-		dbWriter = notesDB.getWritableDatabase();
+		a_edtxt = (EditText) findViewById(R.id.a_edtext);
+
+		a_edtxt. setCursorVisible (true) ;
+		a_edtxt.setFocusable(true);
+		//a_edtxt.setFocusableInTouchMode(true);
+		//a_edtxt.setSelection(a_edtxt.getText().toString().length());
 	}
 
 
@@ -68,9 +70,9 @@ public class AddContent extends AppCompatActivity {
 				finish();
 				break;
 			case R.id.check:
-				if("".equals(edtext.getText().toString()))
+				if("".equals(a_edtxt.getText().toString()))
 				{
-					Toast.makeText(getBaseContext(), "不能保存空笔记", Toast.LENGTH_SHORT).show();
+					//Toast.makeText(getBaseContext(), "不能保存空笔记", Toast.LENGTH_SHORT).show();
 				}
 				else {
 					addData();
@@ -85,7 +87,7 @@ public class AddContent extends AppCompatActivity {
 	}
 	public void addData() {
 		ContentValues cv = new ContentValues();
-		cv.put(NotesDB.CONTENT,edtext.getText().toString());
+		cv.put(NotesDB.CONTENT,a_edtxt.getText().toString());
 		cv.put(NotesDB.TIME, getTime());
 		dbWriter.insert(NotesDB.TABLE_NAME, null, cv);
 	}

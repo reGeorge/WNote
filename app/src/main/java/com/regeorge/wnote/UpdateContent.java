@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,7 +44,7 @@ public class UpdateContent extends AppCompatActivity {
         u_edtxt. setCursorVisible (true) ;
         u_edtxt.setFocusable(true);
         u_edtxt.setText(this.getIntent().getStringExtra(NotesDB.CONTENT));
-        u_edtxt.setFocusableInTouchMode(true);
+        //u_edtxt.setFocusableInTouchMode(true);
         u_edtxt.setSelection(u_edtxt.getText().toString().length());
     }
 
@@ -71,7 +70,7 @@ public class UpdateContent extends AppCompatActivity {
                 if("".equals(u_edtxt.getText().toString()))
                 {
                     deleteData();
-                    Toast.makeText(getBaseContext(), "已删除", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getBaseContext(), "已删除", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     updateData();

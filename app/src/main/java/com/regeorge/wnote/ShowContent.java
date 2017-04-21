@@ -1,6 +1,5 @@
 package com.regeorge.wnote;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -12,10 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import static com.regeorge.wnote.R.id.s_edtext;
 
@@ -45,17 +40,6 @@ public class ShowContent extends AppCompatActivity  {
         
     }
 
-    @Override
-    public void onBackPressed() {
-        if("".equals(s_edtxt.getText().toString()))
-        {
-        }
-        else{
-            updateData();
-            Toast.makeText(getBaseContext(), "已保存", Toast.LENGTH_SHORT).show();
-        }
-        finish();
-    }
 
     public void initView() {
     	//s_delete = (Button) findViewById(R.id.s_deletebtn);
@@ -68,7 +52,7 @@ public class ShowContent extends AppCompatActivity  {
 		s_edtxt.setText(this.getIntent().getStringExtra(NotesDB.CONTENT));
 
         s_edtxt. setCursorVisible ( false ) ;
-        s_edtxt.setFocusable(true);
+        s_edtxt.setFocusable(false);
         s_edtxt.clearFocus();
 
         s_edtxt.setOnClickListener(new OnClickListener() {
@@ -92,13 +76,6 @@ public class ShowContent extends AppCompatActivity  {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if("".equals(s_edtxt.getText().toString()))
-                {
-                }
-                else{
-                    updateData();
-                    Toast.makeText(getBaseContext(), "已保存", Toast.LENGTH_SHORT).show();
-                }
                 finish();
                 break;
             case R.id.trash:
@@ -114,19 +91,6 @@ public class ShowContent extends AppCompatActivity  {
 		dbWriter.delete(NotesDB.TABLE_NAME, "_id="+getIntent().getIntExtra(NotesDB.ID, 0), null);
 	}
 
-	public void updateData() {
-		ContentValues cv = new ContentValues();
-		cv.put(NotesDB.CONTENT,s_edtxt.getText().toString());
-		cv.put(NotesDB.TIME, getTime());
-		dbWriter.update(NotesDB.TABLE_NAME, cv,
-                "_id="+getIntent().getIntExtra(NotesDB.ID, 0),null);
-	}
 
-    private String getTime() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-        Date date = new Date();
-        String str = format.format(date);
-        return str;
-    }
 
 }
