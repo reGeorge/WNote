@@ -1,7 +1,6 @@
 package com.regeorge.wnote;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -55,16 +54,17 @@ public class UpdateContent extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent i = new Intent(UpdateContent.this,MainActivity.class);
+        //Intent i = new Intent(UpdateContent.this,MainActivity.class);
         switch (item.getItemId()) {
             case android.R.id.home:
-                if("".equals(u_edtxt.getText().toString()))
+                if("".equals(u_edtxt.getText().toString())
+                        ||this.getIntent().getStringExtra(NotesDB.CONTENT).equals(u_edtxt.getText().toString()))
                 {
                 }
                 else {
                     updateData();
                 }
-                startActivity(i);
+                //startActivity(i);
                 finish();
                 break;
             case R.id.check:
@@ -73,10 +73,14 @@ public class UpdateContent extends AppCompatActivity {
                     deleteData();
                     //Toast.makeText(getBaseContext(), "已删除", Toast.LENGTH_SHORT).show();
                 }
+                else if(this.getIntent().getStringExtra(NotesDB.CONTENT).equals(u_edtxt.getText().toString()))
+                {
+
+                }
                 else {
                     updateData();
                 }
-                startActivity(i);
+                //startActivity(i);
                 finish();
                 break;
             default:
@@ -87,14 +91,15 @@ public class UpdateContent extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(UpdateContent.this,MainActivity.class);
-        if("".equals(u_edtxt.getText().toString()))
+        //Intent i = new Intent(UpdateContent.this,MainActivity.class);
+        if("".equals(u_edtxt.getText().toString())
+                ||this.getIntent().getStringExtra(NotesDB.CONTENT).equals(u_edtxt.getText().toString()))
         {
         }
         else {
             updateData();
         }
-        startActivity(i);
+        //startActivity(i);
         finish();
     }
 
