@@ -65,6 +65,7 @@ public class UpdateContent extends AppCompatActivity {
                     updateData();
                 }
                 startActivity(i);
+                finish();
                 break;
             case R.id.check:
                 if("".equals(u_edtxt.getText().toString()))
@@ -76,11 +77,25 @@ public class UpdateContent extends AppCompatActivity {
                     updateData();
                 }
                 startActivity(i);
+                finish();
                 break;
             default:
         }
         return true;
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(UpdateContent.this,MainActivity.class);
+        if("".equals(u_edtxt.getText().toString()))
+        {
+        }
+        else {
+            updateData();
+        }
+        startActivity(i);
+        finish();
     }
 
     public void deleteData() {

@@ -62,6 +62,7 @@ public class ShowContent extends AppCompatActivity  {
                                            Intent i = ShowContent.this.getIntent();
                                            i.setClass(ShowContent.this,UpdateContent.class);
                                            startActivity(i);
+                                           finish();
                                        }
                                    });
 
