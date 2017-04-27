@@ -16,7 +16,7 @@
             android:theme="@style/AppTheme.AppBarOverlay">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/a_toolbar"
+                android:id="@+id/w_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
@@ -24,8 +24,10 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/content_update"
-            android:id="@+id/include_update" />
+        <WebView
+            android:id="@+id/a_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></WebView>
 
 
     </LinearLayout>

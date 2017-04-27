@@ -16,6 +16,7 @@ import java.util.Date;
 public class AddContent extends AppCompatActivity {
 	//private Button savebtn,cancelbtn;
 	private EditText a_edtxt;
+	private EditText a_time;
 	//private String val;
 	private NotesDB notesDB;
 	private SQLiteDatabase dbWriter;
@@ -50,6 +51,13 @@ public class AddContent extends AppCompatActivity {
 
 	public void initView() {
 		a_edtxt = (EditText) findViewById(R.id.a_edtext);
+		a_time = (EditText) findViewById(R.id.a_time);
+
+		a_time.setText(getTime());
+
+		a_time. setCursorVisible ( false ) ;
+		a_time.setFocusable(false);
+		a_time.clearFocus();
 
 		a_edtxt. setCursorVisible (true) ;
 		a_edtxt.setFocusable(true);

@@ -17,6 +17,7 @@ public class UpdateContent extends AppCompatActivity {
     private NotesDB notesDB;
     private SQLiteDatabase dbWriter;
     private EditText u_edtxt;
+    private EditText u_time;
 
 
     @Override
@@ -40,10 +41,15 @@ public class UpdateContent extends AppCompatActivity {
 
     public void initView() {
         u_edtxt = (EditText) findViewById(R.id.u_edtext);
-        u_edtxt. setCursorVisible (true) ;
-        u_edtxt.setFocusable(true);
+        u_time = (EditText) findViewById(R.id.u_time);
+        u_time.setText(this.getIntent().getStringExtra(NotesDB.TIME));
         u_edtxt.setText(this.getIntent().getStringExtra(NotesDB.CONTENT));
         //u_edtxt.setFocusableInTouchMode(true);
+        u_time. setCursorVisible ( false ) ;
+        u_time.setFocusable(false);
+        u_time.clearFocus();
+        u_edtxt. setCursorVisible (true) ;
+        u_edtxt.setFocusable(true);
         u_edtxt.setSelection(u_edtxt.getText().toString().length());
     }
 

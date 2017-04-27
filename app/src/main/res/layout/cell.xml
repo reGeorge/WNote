@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="62dp"
         android:background="#3F51B5"
         android:gravity="center"
         android:tag="Bottom3"
@@ -20,8 +20,8 @@
 
         <ImageView
             android:id="@+id/trash"
-            android:layout_width="27dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="36dp"
             android:layout_weight="1"
             android:src="@drawable/trash" />
 
@@ -29,38 +29,38 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:text="Delete Item?"
+            android:text="确定删除?"
             android:textColor="#fff"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/c_delete"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="31dp"
             android:layout_weight="4"
             android:background="#fff"
-            android:text="Yes,Delete"
+            android:text="删除"
             android:textColor="#FF5534" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="62dp"
         android:layout_gravity="center_vertical"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/list_content"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:text="这是笔记"
-            android:gravity="bottom|left"/>
+            android:gravity="left|center_vertical|start" />
 
         <TextView
             android:id="@+id/list_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
+            android:gravity="bottom|left"
             android:textSize="10dp"
             android:text="2017年2月18日 13:12:32"/>
 

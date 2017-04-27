@@ -54,14 +54,14 @@ public class MainActivity extends AppCompatActivity
         dbReader = notesDB.getReadableDatabase();
         //dbWriter = notesDB.getWritableDatabase();
 
-       /* DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        /*ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        toggle.syncState();*/
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);*/
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     public void initView() {
@@ -115,8 +115,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds items to the action bar** if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        //getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
         return true;
     }
 
@@ -141,13 +142,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_author) {
-            // Handle the camera action
-        }
-        else if (id == R.id.nav_share) {
-
+        switch (item.getItemId()) {
+            case R.id.nav_author:
+                Intent i = new Intent(MainActivity.this,AboutMe.class);
+                startActivity(i);
+                break;
+            case R.id.nav_share:
+                break;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

@@ -35,6 +35,11 @@
             android:label="修改日程"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">></activity>
+        <activity
+            android:name=".AboutMe"
+            android:label="我的博客"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">></activity>
     </application>
 
 </manifest>

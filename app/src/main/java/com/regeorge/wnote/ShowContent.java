@@ -12,13 +12,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
-import static com.regeorge.wnote.R.id.s_edtext;
-
 
 public class ShowContent extends AppCompatActivity  {
 
 	//private Button s_cancel,s_save;
 	private EditText s_edtxt;
+    private EditText s_time;
 	private NotesDB notesDB;
 	private SQLiteDatabase dbWriter;
 	//private Intent i;
@@ -45,12 +44,17 @@ public class ShowContent extends AppCompatActivity  {
     	//s_delete = (Button) findViewById(R.id.s_deletebtn);
     	//s_cancel = (Button) findViewById(R.id.s_cancelbtn);
 		//s_save = (Button) findViewById(R.id.s_savebtn);
-    	s_edtxt = (EditText) findViewById(s_edtext);
+    	s_edtxt = (EditText) findViewById(R.id.s_edtext);
+        s_time = (EditText) findViewById(R.id.s_time);
 
     	notesDB = new NotesDB(this);
         dbWriter = notesDB.getWritableDatabase();
 		s_edtxt.setText(this.getIntent().getStringExtra(NotesDB.CONTENT));
+        s_time.setText(this.getIntent().getStringExtra(NotesDB.TIME));
 
+        s_time. setCursorVisible ( false ) ;
+        s_time.setFocusable(false);
+        s_time.clearFocus();
         s_edtxt. setCursorVisible ( false ) ;
         s_edtxt.setFocusable(false);
         s_edtxt.clearFocus();

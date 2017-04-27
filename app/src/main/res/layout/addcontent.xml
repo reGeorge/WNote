@@ -24,14 +24,8 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <EditText
-            android:id="@+id/a_edtext"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
-            android:gravity="top|center_vertical"
-            android:hint="写下你的计划..." />
+    <include layout="@layout/content_add"
+        android:id="@+id/include_add" />
 
 
     </LinearLayout>
