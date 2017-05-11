@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 cursor = dbReader.query(NotesDB.TABLE_NAME, null, null, null,
-                        null, null, null);
+                        null, null, NotesDB.TIME+" desc");
                 //将数据库表与lv的item映射；
                 cursor.moveToPosition(position);
                 Intent j = new Intent(MainActivity.this,ShowContent.class);
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity
     public void selectDB() {
         DELETE_FLAG = false;
         Cursor cursor = dbReader.query(NotesDB.TABLE_NAME, null,
-                null, null, null, null, null);
+                null, null, null, null, NotesDB.TIME+" desc");
         adapter = new ListViewAdapter(this,cursor,notesDB);
         lv.setAdapter(adapter);
         //对adapter添加观察者监听

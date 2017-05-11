@@ -14,15 +14,16 @@
 
     <EditText
         android:id="@+id/a_time"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@null"
         android:gravity="right"
         android:textSize="15dp"/>
+
     <EditText
         android:id="@+id/a_edtext"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="30dp"
         android:layout_weight="1"
         android:background="@null"
