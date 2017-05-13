@@ -71,7 +71,7 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     @Override
     public View generateView(final int position, ViewGroup parent) {
         // 获取cell布局文件v
-        View v = LayoutInflater.from(context).inflate(R.layout.cell,null);
+        View v = LayoutInflater.from(context).inflate(R.layout.listview_item,null);
         //返回文件中的view
 
         SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));

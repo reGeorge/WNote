@@ -16,8 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 
+import com.regeorge.wnote.adapter.GridViewAdapter;
 import com.regeorge.wnote.adapter.ListViewAdapter;
 
 public class MainActivity extends AppCompatActivity
@@ -26,13 +28,16 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout drawerLayout;
     private FloatingActionButton newbtn;
     private ListView lv;
+    private GridView gv;
     //private View deleteBtn;
     private Intent i;
     private ListViewAdapter adapter;
+    private GridViewAdapter adapter2;
     private NotesDB notesDB;
     private SQLiteDatabase dbReader;
     //private SQLiteDatabase dbWriter;
     private Cursor cursor;
+    private int FLAG = 0;
 
     public static  boolean DELETE_FLAG = false;
 
@@ -81,6 +86,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        gv = (GridView) findViewById(R.id.grid);
 
         newbtn = (FloatingActionButton) findViewById(R.id.new_btn);
         newbtn.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +123,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar** if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        //getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
         return true;
     }
 
@@ -130,8 +135,20 @@ public class MainActivity extends AppCompatActivity
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 break;
-            case R.id.action_settings:
-                return super.onOptionsItemSelected(item);
+            case R.id.switcher1:
+                switch (FLAG) {
+                    case 0:
+                        FLAG = 1;
+                        lv.setVisibility(View.VISIBLE);
+                        gv.setVisibility(View.GONE);
+                        break;
+                    case 1:
+                        FLAG = 0;
+                        lv.setVisibility(View.GONE);
+                        gv.setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                }
             default:
 
         }
@@ -166,7 +183,9 @@ public class MainActivity extends AppCompatActivity
         Cursor cursor = dbReader.query(NotesDB.TABLE_NAME, null,
                 null, null, null, null, NotesDB.TIME+" desc");
         adapter = new ListViewAdapter(this,cursor,notesDB);
+        adapter2 = new GridViewAdapter(this);
         lv.setAdapter(adapter);
+        gv.setAdapter(adapter2);
         //对adapter添加观察者监听
         DataSetObserver observer=new DataSetObserver(){
             public void onChanged() {

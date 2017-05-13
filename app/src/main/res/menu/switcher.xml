@@ -2,17 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/switcher1"
+        android:id="@+id/switcher"
         android:icon="@drawable/ic_check"
         android:title="Check"
-        android:visible="true"
         app:showAsAction="always"/>
-
-    <item
-        android:id="@+id/switcher2"
-        android:icon="@drawable/ic_close_white"
-        android:title="Check"
-        android:visible="false"
-        app:showAsAction="always"/>
-
 </menu>
