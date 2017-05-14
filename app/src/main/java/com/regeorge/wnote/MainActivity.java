@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity
     private SQLiteDatabase dbReader;
     //private SQLiteDatabase dbWriter;
     private Cursor cursor;
-    private int FLAG = 0;
+    private static int FLAG = 0;
 
     public static  boolean DELETE_FLAG = false;
 
@@ -125,6 +125,34 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+   /* @Override
+    public void invalidateOptionsMenu() {
+        super.invalidateOptionsMenu();
+    }*/
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        //menu.clear();
+        aMenu = menu;
+        checkOptionMenu();
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    private Menu aMenu;
+
+    public void checkOptionMenu() {
+        switch (FLAG) {
+            case 0:
+                aMenu.findItem(R.id.switcher1).setVisible(true);
+                aMenu.findItem(R.id.switcher2).setVisible(false);
+                break;
+            case 1:
+                aMenu.findItem(R.id.switcher1).setVisible(false);
+                aMenu.findItem(R.id.switcher2).setVisible(true);
+                break;
+            default:
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -136,19 +164,18 @@ public class MainActivity extends AppCompatActivity
                 drawerLayout.openDrawer(GravityCompat.START);
                 break;
             case R.id.switcher1:
-                switch (FLAG) {
-                    case 0:
-                        FLAG = 1;
-                        lv.setVisibility(View.VISIBLE);
-                        gv.setVisibility(View.GONE);
-                        break;
-                    case 1:
-                        FLAG = 0;
-                        lv.setVisibility(View.GONE);
-                        gv.setVisibility(View.VISIBLE);
-                        break;
-                    default:
-                }
+                FLAG = 1;
+                lv.setVisibility(View.VISIBLE);
+                gv.setVisibility(View.GONE);
+                checkOptionMenu();
+
+                break;
+            case R.id.switcher2:
+                FLAG = 0;
+                lv.setVisibility(View.GONE);
+                gv.setVisibility(View.VISIBLE);
+                checkOptionMenu();
+                break;
             default:
 
         }
