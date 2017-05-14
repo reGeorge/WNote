@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+import com.daimajia.swipe.SimpleSwipeListener;
+import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 import com.regeorge.wnote.NotesDB;
 import com.regeorge.wnote.R;
@@ -50,7 +54,14 @@ public class GridViewAdapter extends BaseSwipeAdapter {
         String time = cursor.getString(cursor.getColumnIndex(NotesDB.TIME));
         timev.setText(time);
 
-        convertView.findViewById(R.id.trash).setOnClickListener(new View.OnClickListener() {
+        SwipeLayout swipeLayout = (SwipeLayout)convertView.findViewById(getSwipeLayoutResourceId(position));
+        swipeLayout.addSwipeListener(new SimpleSwipeListener() {
+            @Override
+            public void onOpen(SwipeLayout layout) {
+                YoYo.with(Techniques.Tada).duration(500).delay(100).playOn(layout.findViewById(R.id.grid_trash));
+            }
+        });
+        convertView.findViewById(R.id.grid_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 cursor.moveToPosition(position);

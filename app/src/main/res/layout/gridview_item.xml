@@ -3,15 +3,17 @@
 <com.daimajia.swipe.SwipeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swipe"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
+        android:id="@+id/grid_delete"
         android:tag="Bottom2"
         android:background="#333"
         android:layout_width="40dp"
         android:gravity="center"
         android:layout_height="120dp">
         <ImageView
-            android:id="@+id/trash"
+            android:id="@+id/grid_trash"
             android:src="@drawable/trash"
             android:layout_width="22dp"
             android:layout_height="22dp" />

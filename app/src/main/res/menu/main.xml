@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/switcher1"
-        android:icon="@drawable/ic_check"
+        android:icon="@drawable/ic_list_white_48dp"
         android:title="Check"
         android:visible="true"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/switcher2"
-        android:icon="@drawable/ic_close_white"
+        android:icon="@drawable/ic_view_module_white_48dp"
         android:title="Check"
         android:visible="true"
         app:showAsAction="always"/>

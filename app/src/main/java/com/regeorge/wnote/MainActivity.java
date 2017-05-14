@@ -204,8 +204,7 @@ public class MainActivity extends AppCompatActivity
                 Intent i = new Intent(MainActivity.this,AboutMe.class);
                 startActivity(i);
                 break;
-            case R.id.nav_share:
-                break;
+            default:
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

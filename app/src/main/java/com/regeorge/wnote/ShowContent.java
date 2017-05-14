@@ -83,7 +83,7 @@ public class ShowContent extends AppCompatActivity  {
             case android.R.id.home:
                 finish();
                 break;
-            case R.id.trash:
+            case R.id.grid_delete:
                 deleteData();
                 finish();
                 break;

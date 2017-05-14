@@ -101,7 +101,7 @@ public class AddContent extends AppCompatActivity {
 	}
 
 	private String getTime() {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 		Date date = new Date();
 		String str = format.format(date);
 		return str;

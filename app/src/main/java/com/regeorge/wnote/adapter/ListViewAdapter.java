@@ -60,24 +60,30 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     @Override
     public View generateView(final int position, ViewGroup parent) {
         // 获取cell布局文件v
-        View v = LayoutInflater.from(context).inflate(R.layout.listview_item,null);
-        //返回文件中的view
+        return LayoutInflater.from(context).inflate(R.layout.listview_item,null);
 
-        SwipeLayout swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
+    }
 
+    @Override
+    public void fillValues(final int position, View convertView) {
+        contentv = (TextView) convertView.findViewById(R.id.list_content);
+        timev = (TextView) convertView.findViewById(R.id.list_time);
+
+        cursor.moveToPosition(position);
+        String content = cursor.getString(cursor.getColumnIndex(NotesDB.CONTENT));
+        contentv.setText(content);
+        String time = cursor.getString(cursor.getColumnIndex(NotesDB.TIME));
+        timev.setText(time);
+
+        SwipeLayout swipeLayout = (SwipeLayout)convertView.findViewById(getSwipeLayoutResourceId(position));
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
-                YoYo.with(Techniques.Tada).duration(500).delay(100).playOn(layout.findViewById(R.id.trash));
+                YoYo.with(Techniques.Tada).duration(500).delay(100).playOn(layout.findViewById(R.id.list_trash));
             }
         });
-        /*swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
-            @Override
-            public void onDoubleClick(SwipeLayout layout, boolean surface) {
-                Toast.makeText(context, "DoubleClick", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-        v.findViewById(R.id.c_delete).setOnClickListener(new View.OnClickListener() {
+
+        convertView.findViewById(R.id.list_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 cursor.moveToPosition(position);
@@ -87,19 +93,6 @@ public class ListViewAdapter extends BaseSwipeAdapter {
                 notifyDataSetChanged();
             }
         });
-        return v;
-    }
-
-    @Override
-    public void fillValues(int position, View convertView) {
-        contentv = (TextView) convertView.findViewById(R.id.list_content);
-        timev = (TextView) convertView.findViewById(R.id.list_time);
-
-        cursor.moveToPosition(position);
-        String content = cursor.getString(cursor.getColumnIndex(NotesDB.CONTENT));
-        contentv.setText(content);
-        String time = cursor.getString(cursor.getColumnIndex(NotesDB.TIME));
-        timev.setText(time);
 
     }
 
