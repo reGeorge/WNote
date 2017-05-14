@@ -122,7 +122,7 @@ public class UpdateContent extends AppCompatActivity {
     }
 
     private String getTime() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm");
         Date date = new Date();
         String str = format.format(date);
         return str;

@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity
     private Cursor cursor;
     private static int FLAG = 0;
 
-    public static  boolean DELETE_FLAG = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +86,20 @@ public class MainActivity extends AppCompatActivity
         });
 
         gv = (GridView) findViewById(R.id.grid);
+        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                cursor = dbReader.query(NotesDB.TABLE_NAME, null, null, null,
+                        null, null, NotesDB.TIME+" desc");
+                //将数据库表与lv的item映射；
+                cursor.moveToPosition(position);
+                Intent j = new Intent(MainActivity.this,ShowContent.class);
+                j.putExtra(NotesDB.ID, cursor.getInt(cursor.getColumnIndex(NotesDB.ID)));
+                j.putExtra(NotesDB.CONTENT, cursor.getString(cursor.getColumnIndex(NotesDB.CONTENT)));
+                j.putExtra(NotesDB.TIME, cursor.getString(cursor.getColumnIndex(NotesDB.TIME)));
+                startActivity(j);
+            }
+        });
 
         newbtn = (FloatingActionButton) findViewById(R.id.new_btn);
         newbtn.setOnClickListener(new View.OnClickListener() {
@@ -206,20 +219,25 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void selectDB() {
-        DELETE_FLAG = false;
         Cursor cursor = dbReader.query(NotesDB.TABLE_NAME, null,
                 null, null, null, null, NotesDB.TIME+" desc");
         adapter = new ListViewAdapter(this,cursor,notesDB);
-        adapter2 = new GridViewAdapter(this);
+        adapter2 = new GridViewAdapter(this, cursor, notesDB);
         lv.setAdapter(adapter);
         gv.setAdapter(adapter2);
         //对adapter添加观察者监听
-        DataSetObserver observer=new DataSetObserver(){
+        DataSetObserver observer = new DataSetObserver(){
             public void onChanged() {
                 selectDB();
             }
         };
         adapter.registerDataSetObserver(observer);
+        DataSetObserver observer2 = new DataSetObserver(){
+            public void onChanged() {
+                selectDB();
+            }
+        };
+        adapter2.registerDataSetObserver(observer2);
     }
 
 

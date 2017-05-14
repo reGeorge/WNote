@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -37,17 +36,7 @@ public class ListViewAdapter extends BaseSwipeAdapter {
         this.notesDB = notesDB;
     }
 
-    public void setContext(Context context) {
-        this.context = context;
-    }
 
-    public void setCursor(Cursor cursor) {
-        this.cursor = cursor;
-    }
-
-    public void setNotesDB(NotesDB notesDB) {
-        this.notesDB = notesDB;
-    }
     @Override
     public int getSwipeLayoutResourceId(int position) {
         return R.id.swipe;
@@ -82,12 +71,12 @@ public class ListViewAdapter extends BaseSwipeAdapter {
                 YoYo.with(Techniques.Tada).duration(500).delay(100).playOn(layout.findViewById(R.id.trash));
             }
         });
-        swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
+        /*swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {
             @Override
             public void onDoubleClick(SwipeLayout layout, boolean surface) {
                 Toast.makeText(context, "DoubleClick", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
         v.findViewById(R.id.c_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
