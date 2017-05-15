@@ -24,7 +24,8 @@
             android:name=".AddContent"
             android:label="新增日程"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity
             android:name=".ShowContent"
             android:label="查看日程"
@@ -34,7 +35,8 @@
             android:name=".UpdateContent"
             android:label="修改日程"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity
             android:name=".AboutMe"
             android:label="我的博客"

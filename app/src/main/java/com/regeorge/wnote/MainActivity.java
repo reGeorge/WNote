@@ -1,6 +1,7 @@
 package com.regeorge.wnote;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,6 +23,8 @@ import android.widget.ListView;
 import com.regeorge.wnote.adapter.GridViewAdapter;
 import com.regeorge.wnote.adapter.ListViewAdapter;
 
+import static android.view.View.GONE;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -37,7 +40,9 @@ public class MainActivity extends AppCompatActivity
     private SQLiteDatabase dbReader;
     //private SQLiteDatabase dbWriter;
     private Cursor cursor;
-    private static int FLAG = 0;
+    private static int FLAG = 1;
+    private SharedPreferences settings;
+    public static final String PREFS_NAME = "ItemMode_Setting";
 
 
     @Override
@@ -57,12 +62,6 @@ public class MainActivity extends AppCompatActivity
         notesDB = new NotesDB(this);
         dbReader = notesDB.getReadableDatabase();
         //dbWriter = notesDB.getWritableDatabase();
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        /*ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();*/
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -100,6 +99,20 @@ public class MainActivity extends AppCompatActivity
                 startActivity(j);
             }
         });
+
+        settings = getSharedPreferences(PREFS_NAME, 0);
+        FLAG = settings.getInt("itemMode", 1);
+        switch (FLAG) {
+            case 0:
+                lv.setVisibility(View.GONE);
+                gv.setVisibility(View.VISIBLE);
+                break;
+            case 1:
+                lv.setVisibility(View.VISIBLE);
+                gv.setVisibility(View.GONE);
+                break;
+            default:
+        }
 
         newbtn = (FloatingActionButton) findViewById(R.id.new_btn);
         newbtn.setOnClickListener(new View.OnClickListener() {
@@ -153,15 +166,18 @@ public class MainActivity extends AppCompatActivity
 
     private Menu aMenu;
 
+    //不能直接调用的方法，自己写逻辑，将该方法放到重写方法里，在需要调用的地方触发。（回调）
     public void checkOptionMenu() {
+        settings = getSharedPreferences(PREFS_NAME, 0);
+        FLAG = settings.getInt("itemMode", 1);
         switch (FLAG) {
             case 0:
-                aMenu.findItem(R.id.switcher1).setVisible(true);
-                aMenu.findItem(R.id.switcher2).setVisible(false);
+                aMenu.findItem(R.id.switcher_list).setVisible(true);
+                aMenu.findItem(R.id.switcher_grid).setVisible(false);
                 break;
             case 1:
-                aMenu.findItem(R.id.switcher1).setVisible(false);
-                aMenu.findItem(R.id.switcher2).setVisible(true);
+                aMenu.findItem(R.id.switcher_list).setVisible(false);
+                aMenu.findItem(R.id.switcher_grid).setVisible(true);
                 break;
             default:
         }
@@ -172,20 +188,24 @@ public class MainActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 break;
-            case R.id.switcher1:
-                FLAG = 1;
+            case R.id.switcher_list:
+                editor.putInt("itemMode", 1);
+                editor.commit();
                 lv.setVisibility(View.VISIBLE);
-                gv.setVisibility(View.GONE);
+                gv.setVisibility(GONE);
                 checkOptionMenu();
 
                 break;
-            case R.id.switcher2:
-                FLAG = 0;
-                lv.setVisibility(View.GONE);
+            case R.id.switcher_grid:
+                editor.putInt("itemMode", 0);
+                editor.commit();
+                lv.setVisibility(GONE);
                 gv.setVisibility(View.VISIBLE);
                 checkOptionMenu();
                 break;
@@ -194,6 +214,8 @@ public class MainActivity extends AppCompatActivity
         }
         return true;
     }
+
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

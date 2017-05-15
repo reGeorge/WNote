@@ -60,8 +60,8 @@ public class AddContent extends AppCompatActivity {
 		a_time.clearFocus();
 
 		a_edtxt. setCursorVisible (true) ;
-		a_edtxt.setFocusable(true);
-		//a_edtxt.setFocusableInTouchMode(true);
+		//a_edtxt.setFocusable(true);
+		a_edtxt.setFocusableInTouchMode(true);
 		//a_edtxt.setSelection(a_edtxt.getText().toString().length());
 	}
 
