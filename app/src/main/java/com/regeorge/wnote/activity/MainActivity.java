@@ -1,4 +1,4 @@
-package com.regeorge.wnote;
+package com.regeorge.wnote.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,12 +16,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
 
+import com.regeorge.wnote.R;
 import com.regeorge.wnote.adapter.GridViewAdapter;
 import com.regeorge.wnote.adapter.ListViewAdapter;
+import com.regeorge.wnote.database.NotesDB;
 
 import static android.view.View.GONE;
 
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity
 
     public void initView() {
         lv = (ListView) findViewById(R.id.list);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 cursor = dbReader.query(NotesDB.TABLE_NAME, null, null, null,
@@ -82,10 +83,10 @@ public class MainActivity extends AppCompatActivity
                 j.putExtra(NotesDB.TIME, cursor.getString(cursor.getColumnIndex(NotesDB.TIME)));
                 startActivity(j);
             }
-        });
+        });*/
 
         gv = (GridView) findViewById(R.id.grid);
-        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 cursor = dbReader.query(NotesDB.TABLE_NAME, null, null, null,
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity
                 j.putExtra(NotesDB.TIME, cursor.getString(cursor.getColumnIndex(NotesDB.TIME)));
                 startActivity(j);
             }
-        });
+        });*/
 
         settings = getSharedPreferences(PREFS_NAME, 0);
         FLAG = settings.getInt("itemMode", 1);
@@ -260,6 +261,18 @@ public class MainActivity extends AppCompatActivity
         };
         adapter2.registerDataSetObserver(observer2);
     }
+    /*//监听swipe表面item点击事件
+    private View.OnClickListener itemClicklistener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.btn_click:
+                    int position = (Integer) v.getTag(R.id.btn_click);
+                    Toast.makeText(MainActivity.this, "你点击了" + position, Toast.LENGTH_LONG).show();
+                    break;
+            }
+        }
+    }*/
 
 
 

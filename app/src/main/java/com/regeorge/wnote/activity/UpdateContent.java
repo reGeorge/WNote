@@ -1,4 +1,4 @@
-package com.regeorge.wnote;
+package com.regeorge.wnote.activity;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import com.regeorge.wnote.R;
+import com.regeorge.wnote.database.NotesDB;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -36,13 +40,21 @@ public class UpdateContent extends AppCompatActivity {
 
         notesDB = new NotesDB(this);
         dbWriter = notesDB.getWritableDatabase();
-        initView();
+        try {
+            initView();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void initView() {
+    public void initView() throws ParseException {
         u_edtxt = (EditText) findViewById(R.id.u_edtext);
         u_time = (EditText) findViewById(R.id.u_time);
-        u_time.setText(this.getIntent().getStringExtra(NotesDB.TIME));
+        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+        Date date = format.parse(this.getIntent().getStringExtra(NotesDB.TIME));
+        format = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+        String time = format.format(date);
+        u_time.setText(time);
         u_edtxt.setText(this.getIntent().getStringExtra(NotesDB.CONTENT));
         //u_edtxt.setFocusableInTouchMode(true);
         u_time. setCursorVisible ( false ) ;

@@ -1,6 +1,7 @@
 package com.regeorge.wnote.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
@@ -13,8 +14,13 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
-import com.regeorge.wnote.NotesDB;
+import com.regeorge.wnote.database.NotesDB;
 import com.regeorge.wnote.R;
+import com.regeorge.wnote.activity.ShowContent;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class GridViewAdapter extends BaseSwipeAdapter {
@@ -51,10 +57,25 @@ public class GridViewAdapter extends BaseSwipeAdapter {
         cursor.moveToPosition(position);
         String content = cursor.getString(cursor.getColumnIndex(NotesDB.CONTENT));
         contentv.setText(content);
-        String time = cursor.getString(cursor.getColumnIndex(NotesDB.TIME));
-        timev.setText(time);
+        timev.setText(getTime());
 
-        SwipeLayout swipeLayout = (SwipeLayout)convertView.findViewById(getSwipeLayoutResourceId(position));
+        final SwipeLayout swipeLayout = (SwipeLayout)convertView.findViewById(getSwipeLayoutResourceId(position));
+        swipeLayout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(swipeLayout.getOpenStatus() == SwipeLayout.Status.Open) {
+                    swipeLayout.toggle();
+                }
+                else if(swipeLayout.getOpenStatus() == SwipeLayout.Status.Close){
+                    cursor.moveToPosition(position);
+                    Intent j = new Intent(context, ShowContent.class);
+                    j.putExtra(NotesDB.ID, cursor.getInt(cursor.getColumnIndex(NotesDB.ID)));
+                    j.putExtra(NotesDB.CONTENT, cursor.getString(cursor.getColumnIndex(NotesDB.CONTENT)));
+                    j.putExtra(NotesDB.TIME, cursor.getString(cursor.getColumnIndex(NotesDB.TIME)));
+                    context.startActivity(j);
+                }
+            }
+        });
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
@@ -72,6 +93,32 @@ public class GridViewAdapter extends BaseSwipeAdapter {
             }
         });
     }
+    public String getTime() {
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+        SimpleDateFormat format2 = new SimpleDateFormat("yyyy.MM.dd");
+        SimpleDateFormat format3 = new SimpleDateFormat("yyyy");
+
+        SimpleDateFormat format4 = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat format5 = new SimpleDateFormat("MM月dd日");
+        SimpleDateFormat format6 = new SimpleDateFormat("yyyy年MM月");
+        Date date = null;
+        Date today = new Date();
+        try {
+            date = format1.parse(cursor.getString(cursor.getColumnIndex(NotesDB.TIME)));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String time = null;
+        if (format2.format(today).equals(format2.format(date))) {
+            time = format4.format(date);
+        }else if(format3.format(today).equals(format3.format(date))) {
+            time = format5.format(date);
+        }else {
+            time = format6.format(date);
+        }
+        return time;
+    }
 
     @Override
     public int getCount() {
@@ -87,4 +134,5 @@ public class GridViewAdapter extends BaseSwipeAdapter {
     public long getItemId(int position) {
         return position;
     }
+
 }

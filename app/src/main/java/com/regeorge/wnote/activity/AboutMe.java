@@ -1,4 +1,4 @@
-package com.regeorge.wnote;
+package com.regeorge.wnote.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.regeorge.wnote.R;
 
 import static com.regeorge.wnote.R.layout.webview;
 

@@ -1,4 +1,4 @@
-package com.regeorge.wnote;
+package com.regeorge.wnote.activity;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,6 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+
+import com.regeorge.wnote.R;
+import com.regeorge.wnote.database.NotesDB;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class ShowContent extends AppCompatActivity  {
@@ -33,14 +40,17 @@ public class ShowContent extends AppCompatActivity  {
             //actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
         //System.out.println(getIntent().getIntExtra(NotesDB.ID, 0));
-        initView();
+        try {
+            initView();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
 
-        
     }
 
 
-    public void initView() {
+    public void initView() throws ParseException {
     	//s_delete = (Button) findViewById(R.id.s_deletebtn);
     	//s_cancel = (Button) findViewById(R.id.s_cancelbtn);
 		//s_save = (Button) findViewById(R.id.s_savebtn);
@@ -50,7 +60,11 @@ public class ShowContent extends AppCompatActivity  {
     	notesDB = new NotesDB(this);
         dbWriter = notesDB.getWritableDatabase();
 		s_edtxt.setText(this.getIntent().getStringExtra(NotesDB.CONTENT));
-        s_time.setText(this.getIntent().getStringExtra(NotesDB.TIME));
+        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+        Date date = format.parse(this.getIntent().getStringExtra(NotesDB.TIME));
+        format = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+        String time = format.format(date);
+        s_time.setText(time);
 
         s_time. setCursorVisible ( false ) ;
         s_time.setFocusable(false);

@@ -1,4 +1,4 @@
-package com.regeorge.wnote;
+package com.regeorge.wnote.activity;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import com.regeorge.wnote.R;
+import com.regeorge.wnote.database.NotesDB;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -34,7 +38,11 @@ public class AddContent extends AppCompatActivity {
 		}
 		notesDB = new NotesDB(this);
 		dbWriter = notesDB.getWritableDatabase();
-		initView();
+		try {
+			initView();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -49,11 +57,15 @@ public class AddContent extends AppCompatActivity {
 		finish();
 	}
 
-	public void initView() {
+	public void initView() throws ParseException {
 		a_edtxt = (EditText) findViewById(R.id.a_edtext);
 		a_time = (EditText) findViewById(R.id.a_time);
 
-		a_time.setText(getTime());
+		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+		Date date = format.parse(getTime());
+		format = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+		String time = format.format(date);
+		a_time.setText(time);
 
 		a_time. setCursorVisible ( false ) ;
 		a_time.setFocusable(false);
