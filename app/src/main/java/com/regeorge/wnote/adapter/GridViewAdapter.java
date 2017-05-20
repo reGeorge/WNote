@@ -14,13 +14,15 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.daimajia.swipe.SimpleSwipeListener;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
-import com.regeorge.wnote.database.NotesDB;
 import com.regeorge.wnote.R;
 import com.regeorge.wnote.activity.ShowContent;
+import com.regeorge.wnote.database.NotesDB;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 
 public class GridViewAdapter extends BaseSwipeAdapter {
@@ -30,7 +32,6 @@ public class GridViewAdapter extends BaseSwipeAdapter {
     private TextView contentv;
     private TextView timev;
     private NotesDB notesDB;
-    private SQLiteDatabase dbReader;
     private SQLiteDatabase dbWriter;
 
     public GridViewAdapter(Context context, Cursor cursor, NotesDB notesDB) {
@@ -50,6 +51,16 @@ public class GridViewAdapter extends BaseSwipeAdapter {
     }
 
     @Override
+    public void closeAllItems() {
+        mItemManger.closeAllItems();
+    }
+
+    @Override
+    public List<Integer> getOpenItems() {
+        return mItemManger.getOpenItems();
+    }
+
+    @Override
     public void fillValues(final int position, View convertView) {
         contentv = (TextView) convertView.findViewById(R.id.grid_content);
         timev = (TextView) convertView.findViewById(R.id.grid_time);
@@ -63,17 +74,22 @@ public class GridViewAdapter extends BaseSwipeAdapter {
         swipeLayout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(swipeLayout.getOpenStatus() == SwipeLayout.Status.Open) {
-                    swipeLayout.toggle();
-                }
-                else if(swipeLayout.getOpenStatus() == SwipeLayout.Status.Close){
+                //查看getOpenItems方法的返回值再用相同类型的变量比较
+                List<Integer> A = getOpenItems();
+                List<Integer> B = Arrays.asList(-1);
+
+                if(B.equals(A)) {
                     cursor.moveToPosition(position);
                     Intent j = new Intent(context, ShowContent.class);
                     j.putExtra(NotesDB.ID, cursor.getInt(cursor.getColumnIndex(NotesDB.ID)));
                     j.putExtra(NotesDB.CONTENT, cursor.getString(cursor.getColumnIndex(NotesDB.CONTENT)));
                     j.putExtra(NotesDB.TIME, cursor.getString(cursor.getColumnIndex(NotesDB.TIME)));
                     context.startActivity(j);
+                }else {
+                    closeAllItems();
+                    //closeItem(getOpenItems().get(0));
                 }
+
             }
         });
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {

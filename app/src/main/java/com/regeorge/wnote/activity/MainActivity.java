@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity
     private NotesDB notesDB;
     private SQLiteDatabase dbReader;
     //private SQLiteDatabase dbWriter;
-    private Cursor cursor;
     private static int FLAG = 1;
     private SharedPreferences settings;
     public static final String PREFS_NAME = "ItemMode_Setting";
@@ -62,7 +61,6 @@ public class MainActivity extends AppCompatActivity
         initView();
         notesDB = new NotesDB(this);
         dbReader = notesDB.getReadableDatabase();
-        //dbWriter = notesDB.getWritableDatabase();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -70,36 +68,7 @@ public class MainActivity extends AppCompatActivity
 
     public void initView() {
         lv = (ListView) findViewById(R.id.list);
-        /*lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                cursor = dbReader.query(NotesDB.TABLE_NAME, null, null, null,
-                        null, null, NotesDB.TIME+" desc");
-                //将数据库表与lv的item映射；
-                cursor.moveToPosition(position);
-                Intent j = new Intent(MainActivity.this,ShowContent.class);
-                j.putExtra(NotesDB.ID, cursor.getInt(cursor.getColumnIndex(NotesDB.ID)));
-                j.putExtra(NotesDB.CONTENT, cursor.getString(cursor.getColumnIndex(NotesDB.CONTENT)));
-                j.putExtra(NotesDB.TIME, cursor.getString(cursor.getColumnIndex(NotesDB.TIME)));
-                startActivity(j);
-            }
-        });*/
-
         gv = (GridView) findViewById(R.id.grid);
-        /*gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                cursor = dbReader.query(NotesDB.TABLE_NAME, null, null, null,
-                        null, null, NotesDB.TIME+" desc");
-                //将数据库表与lv的item映射；
-                cursor.moveToPosition(position);
-                Intent j = new Intent(MainActivity.this,ShowContent.class);
-                j.putExtra(NotesDB.ID, cursor.getInt(cursor.getColumnIndex(NotesDB.ID)));
-                j.putExtra(NotesDB.CONTENT, cursor.getString(cursor.getColumnIndex(NotesDB.CONTENT)));
-                j.putExtra(NotesDB.TIME, cursor.getString(cursor.getColumnIndex(NotesDB.TIME)));
-                startActivity(j);
-            }
-        });*/
 
         settings = getSharedPreferences(PREFS_NAME, 0);
         FLAG = settings.getInt("itemMode", 1);
@@ -134,8 +103,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -152,10 +119,7 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-   /* @Override
-    public void invalidateOptionsMenu() {
-        super.invalidateOptionsMenu();
-    }*/
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
@@ -201,7 +165,7 @@ public class MainActivity extends AppCompatActivity
                 lv.setVisibility(View.VISIBLE);
                 gv.setVisibility(GONE);
                 checkOptionMenu();
-
+                selectDB();
                 break;
             case R.id.switcher_grid:
                 editor.putInt("itemMode", 0);
@@ -209,6 +173,7 @@ public class MainActivity extends AppCompatActivity
                 lv.setVisibility(GONE);
                 gv.setVisibility(View.VISIBLE);
                 checkOptionMenu();
+                selectDB();
                 break;
             default:
 
@@ -240,6 +205,8 @@ public class MainActivity extends AppCompatActivity
         selectDB();
     }
 
+    DataSetObserver observer;
+    DataSetObserver observer2;
     public void selectDB() {
         Cursor cursor = dbReader.query(NotesDB.TABLE_NAME, null,
                 null, null, null, null, NotesDB.TIME+" desc");
@@ -248,33 +215,18 @@ public class MainActivity extends AppCompatActivity
         lv.setAdapter(adapter);
         gv.setAdapter(adapter2);
         //对adapter添加观察者监听
-        DataSetObserver observer = new DataSetObserver(){
+        observer = new DataSetObserver(){
             public void onChanged() {
                 selectDB();
             }
         };
         adapter.registerDataSetObserver(observer);
-        DataSetObserver observer2 = new DataSetObserver(){
+        observer2 = new DataSetObserver(){
             public void onChanged() {
                 selectDB();
             }
         };
         adapter2.registerDataSetObserver(observer2);
     }
-    /*//监听swipe表面item点击事件
-    private View.OnClickListener itemClicklistener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.btn_click:
-                    int position = (Integer) v.getTag(R.id.btn_click);
-                    Toast.makeText(MainActivity.this, "你点击了" + position, Toast.LENGTH_LONG).show();
-                    break;
-            }
-        }
-    }*/
-
-
-
 
 }
