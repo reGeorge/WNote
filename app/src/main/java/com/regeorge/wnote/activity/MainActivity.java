@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity
                 switch(v.getId()) {
                     case R.id.new_btn:
                         //System.out.println("qwer1234");
-                        i.putExtra("flag", "1");
+                        //i.putExtra("flag", "1");
                         startActivity(i);
                         break;
                 }
@@ -191,6 +191,10 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_author:
                 Intent i = new Intent(MainActivity.this,AboutMe.class);
                 startActivity(i);
+                break;
+            case R.id.nav_rv_pic:
+                Intent j = new Intent(MainActivity.this,RvActivity.class);
+                startActivity(j);
                 break;
             default:
         }
