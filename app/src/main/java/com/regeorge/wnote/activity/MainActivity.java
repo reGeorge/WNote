@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,13 +18,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.regeorge.wnote.R;
 import com.regeorge.wnote.adapter.GridViewAdapter;
 import com.regeorge.wnote.adapter.ListViewAdapter;
 import com.regeorge.wnote.database.NotesDB;
+import com.regeorge.wnote.utils.EverNoteUtils;
 
 import static android.view.View.GONE;
 
@@ -40,8 +45,11 @@ public class MainActivity extends AppCompatActivity
     private NotesDB notesDB;
     private SQLiteDatabase dbReader;
     //private SQLiteDatabase dbWriter;
+    private EverNoteUtils mEverNoteUtils;
     private static int FLAG = 1;
     private SharedPreferences settings;
+    private DataSetObserver observer;
+    private DataSetObserver observer2;
     public static final String PREFS_NAME = "ItemMode_Setting";
 
 
@@ -66,6 +74,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    // 初始化界面 listview 和 gridview 和 一个新建按钮
     public void initView() {
         lv = (ListView) findViewById(R.id.list);
         gv = (GridView) findViewById(R.id.grid);
@@ -103,6 +112,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    // 返回键
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -113,6 +123,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    // 初始化toolbar菜单
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar** if it is present.
@@ -120,19 +131,20 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    // 显示toolbar菜单
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         //menu.clear();
         aMenu = menu;
-        checkOptionMenu();
+        checkOptionMenuClickCallback();
         return super.onPrepareOptionsMenu(menu);
     }
 
     private Menu aMenu;
 
-    //不能直接调用的方法，自己写逻辑，将该方法放到重写方法里，在需要调用的地方触发。（回调）
-    public void checkOptionMenu() {
+    //切换列表按钮和网格按钮
+    public void checkOptionMenuClickCallback() {
         settings = getSharedPreferences(PREFS_NAME, 0);
         FLAG = settings.getInt("itemMode", 1);
         switch (FLAG) {
@@ -148,6 +160,8 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    // 切换列表模式和网格模式
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -164,7 +178,7 @@ public class MainActivity extends AppCompatActivity
                 editor.commit();
                 lv.setVisibility(View.VISIBLE);
                 gv.setVisibility(GONE);
-                checkOptionMenu();
+                checkOptionMenuClickCallback();
                 selectDB();
                 break;
             case R.id.switcher_grid:
@@ -172,7 +186,7 @@ public class MainActivity extends AppCompatActivity
                 editor.commit();
                 lv.setVisibility(GONE);
                 gv.setVisibility(View.VISIBLE);
-                checkOptionMenu();
+                checkOptionMenuClickCallback();
                 selectDB();
                 break;
             default:
@@ -182,7 +196,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
+    //侧边栏菜单
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -196,6 +210,25 @@ public class MainActivity extends AppCompatActivity
                 Intent j = new Intent(MainActivity.this,RvActivity.class);
                 startActivity(j);
                 break;
+            case R.id.nav_sync:
+                mEverNoteUtils = new EverNoteUtils();
+                if (!mEverNoteUtils.isLogin()) {
+                    Intent k = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(k);
+                }
+                Toast.makeText(this, "开始同步...", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_logout:
+                mEverNoteUtils = new EverNoteUtils();
+                if (mEverNoteUtils.isLogin()) {
+                    mEverNoteUtils.logout();
+                    Toast.makeText(this, "已退出当前登录的EverNote账号", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.nav_img:
+                Intent l = new Intent(MainActivity.this,GlideTest.class);
+                startActivity(l);
+                break;
             default:
         }
 
@@ -203,14 +236,16 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onResume() {
         super.onResume();
         selectDB();
     }
 
-    DataSetObserver observer;
-    DataSetObserver observer2;
+
+    // 读数据库
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void selectDB() {
         Cursor cursor = dbReader.query(NotesDB.TABLE_NAME, null,
                 null, null, null, null, NotesDB.TIME+" desc");
@@ -218,6 +253,29 @@ public class MainActivity extends AppCompatActivity
         adapter2 = new GridViewAdapter(this, cursor, notesDB);
         lv.setAdapter(adapter);
         gv.setAdapter(adapter2);
+        //滑动时关闭删除按钮
+        lv.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                adapter.closeAllItems();
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
+        gv.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                adapter2.closeAllItems();
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
         //对adapter添加观察者监听
         observer = new DataSetObserver(){
             public void onChanged() {

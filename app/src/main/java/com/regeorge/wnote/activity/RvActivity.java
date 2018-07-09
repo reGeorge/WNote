@@ -52,7 +52,7 @@ public class RvActivity extends AppCompatActivity {
                         Log.e("mTAG", "onScrolled: H ");
                         float H = mLinearLayoutManager.getHeight();
                         float h = view.getBottom();
-                        float bili = h/H;
+                        float bili = (h+view.getHeight()/3)/H;
                         adImageView.setDx(bili);
                     }
                 }

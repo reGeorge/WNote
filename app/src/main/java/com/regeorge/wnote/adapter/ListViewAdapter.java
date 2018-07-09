@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class ListViewAdapter extends BaseSwipeAdapter {
+public class ListViewAdapter extends BaseSwipeAdapter{
 
 
 
@@ -86,6 +88,7 @@ public class ListViewAdapter extends BaseSwipeAdapter {
         return mItemManger.getOpenItems();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void fillValues(final int position, View convertView) {
         contentv = (TextView) convertView.findViewById(R.id.list_content);
@@ -97,7 +100,6 @@ public class ListViewAdapter extends BaseSwipeAdapter {
         timev.setText(getTime());
 
         final SwipeLayout swipeLayout = (SwipeLayout)convertView.findViewById(getSwipeLayoutResourceId(position));
-        //swipeLayout.setClickToClose(true);
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
@@ -107,25 +109,24 @@ public class ListViewAdapter extends BaseSwipeAdapter {
         swipeLayout.getSurfaceView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    //查看getOpenItems方法的返回值再用相同类型的变量比较
-                    List<Integer> A = getOpenItems();
-                    List<Integer> B = Arrays.asList(-1);
+                //查看getOpenItems方法的返回值再用相同类型的变量比较??
+                List<Integer> A = getOpenItems();//未打开则为-1
+                int a = A.get(0);
+                List<Integer> B = Arrays.asList(-1);
+                int b = B.get(0);
 
-                    if(B.equals(A)) {
-                        cursor.moveToPosition(position);
-                        Intent j = new Intent(context, ShowContent.class);
-                        j.putExtra(NotesDB.ID, cursor.getInt(cursor.getColumnIndex(NotesDB.ID)));
-                        j.putExtra(NotesDB.CONTENT, cursor.getString(cursor.getColumnIndex(NotesDB.CONTENT)));
-                        j.putExtra(NotesDB.TIME, cursor.getString(cursor.getColumnIndex(NotesDB.TIME)));
-                        context.startActivity(j);
-                    }else {
-                        closeAllItems();
-                        //closeItem(getOpenItems().get(0));
-                    }
-
+                if(B.equals(A)) {
+                    cursor.moveToPosition(position);
+                    Intent j = new Intent(context, ShowContent.class);
+                    j.putExtra(NotesDB.ID, cursor.getInt(cursor.getColumnIndex(NotesDB.ID)));
+                    j.putExtra(NotesDB.CONTENT, cursor.getString(cursor.getColumnIndex(NotesDB.CONTENT)));
+                    j.putExtra(NotesDB.TIME, cursor.getString(cursor.getColumnIndex(NotesDB.TIME)));
+                    context.startActivity(j);
+                }else {
+                    closeAllItems();
+                }
             }
         });
-
 
         convertView.findViewById(R.id.list_delete).setOnClickListener(new View.OnClickListener() {
             @Override

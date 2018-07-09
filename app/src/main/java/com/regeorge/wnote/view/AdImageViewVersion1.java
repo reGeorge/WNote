@@ -62,7 +62,7 @@ public class AdImageViewVersion1 extends AppCompatImageView {
 //        int mPx = getDrawable().getBounds().height();
         int Min = 0;
         int Max = getDrawable().getBounds().height() - mMinDx;
-        mDx = (int) (bili * getDrawable().getBounds().height()) - mMinDx ;
+        mDx = (int) (bili * (getDrawable().getBounds().height() - mMinDx ));
 //        mDx = (int) (bili);
 
         if (mDx <= Min) {

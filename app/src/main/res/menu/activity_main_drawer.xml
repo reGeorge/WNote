@@ -12,6 +12,17 @@
         android:icon="@drawable/ic_menu_gallery"
         android:title="图片渐变显示" />
 
-
+    <item
+        android:id="@+id/nav_sync"
+        android:icon="@drawable/ic_menu_send"
+        android:title="同步" />
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_menu_manage"
+        android:title="注销" />
+    <item
+        android:id="@+id/nav_img"
+        android:icon="@drawable/ic_menu_manage"
+        android:title="glide学习" />
 
 </menu>
